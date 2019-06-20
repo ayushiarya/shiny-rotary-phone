@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# other
+.xlsx
+.bak
+.csv
+*.xlsx
+*.csv
+*.png
+*.BAK

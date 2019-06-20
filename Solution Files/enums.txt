@@ -1,0 +1,535 @@
+
+:: PyDotnet :: Seamless ::
+==========================
+The module for integration of PyDotnet with Interactive Python
+
+::: FEATURES :::
+================
+- Use help() on any .NET namespace, class, object, method at will
+- Use help(dotnet.clr) to obtain list of namespaces an assemblies
+- Use help() on imported namespaces, e.g.
+     import System.Collections
+     help(System.Collections)
+
+- Use help() on types, e.g. `help(List)`
+- Use help() on constructors, e.g. `help(List.__createinstance__)`
+- Use help() on unbound methods, e.g. `help(List[Int32].FindIndex)`
+- Use help() on bound methods, e.g. `help(myList.FindIndex)`
+
+- Use type(), isinstance(), issubclass() on .NET objects and types
+
+- Generic method support is ON
+- Extension method support is ON
+
+!!! IMPORTANT !!!
+=================
+Please, remember to NOT USE 'import dotnet.seamless' IN PRODUCTION CODE. This
+module is provided for you, so you can use it when you browse around .NET world
+while in Python interactive mode.
+
+!!! WARNING !!!
+===============
+This module overrides help(), type(), isinstance(), issubclass() methods. If
+you use this module in production code you may get unexpected behavior.
+
+::: PRODUCTION CODE :::
+=======================
+Please, for production code use 'import dotnet' and:
+ - if you need to enable support for generic methods use:
+     dotnet.genericmethod.install()
+   (NOTE: make sure you call that ONLY ONCE)
+
+ - if you need to enable support for extension methods use:
+     dotnet.extensionmethod.install()
+   (NOTE: make sure you call that ONLY ONCE)
+
+ - if you want type(), isinstance(), and issubclass() then use:
+     from dotnet.overrides import type, isinstance, issubclass
+   (NOTE: you need to do that only in module, which uses these)
+
+ - if you want to import common .NET types use:
+     from dotnet.commontypes import *
+   (NOTE: you need to do that in your module, which uses any of:
+    Action*, Func*, Array, Tuple*, Dictionary)
+
+SimulationPhaseEnum 
+	LTPlan
+	PASA
+	MTSchedule
+	STSchedule
+CollectionEnum 
+	SystemGenerators
+	SystemFuels
+	SystemFuelContracts
+	SystemEmissions
+	SystemAbatements
+	SystemStorages
+	SystemWaterways
+	SystemPowerStations
+	SystemPhysicalContracts
+	SystemPurchasers
+	SystemReserves
+	SystemBatteries
+	SystemMaintenances
+	SystemHeatPlants
+	SystemHeatNodes
+	SystemGasFields
+	SystemGasPlants
+	SystemGasPipelines
+	SystemGasNodes
+	SystemGasStorages
+	SystemGasDemands
+	SystemGasBasins
+	SystemGasZones
+	SystemGasContracts
+	SystemGasTransports
+	SystemWaterPlants
+	SystemWaterPipelines
+	SystemWaterNodes
+	SystemWaterStorages
+	SystemWaterDemands
+	SystemWaterZones
+	SystemRegions
+	SystemZones
+	SystemNodes
+	SystemLines
+	SystemMLFs
+	SystemTransformers
+	SystemFlowControls
+	SystemInterfaces
+	SystemContingencies
+	SystemCompanies
+	SystemFinancialContracts
+	SystemHubs
+	SystemTransmissionRights
+	SystemCournots
+	SystemRSIs
+	SystemMarkets
+	SystemConstraints
+	SystemDecisionVariables
+	SystemLists
+	SystemDataFiles
+	SystemVariables
+	SystemTimeslices
+	SystemGlobals
+	SystemScenarios
+	SystemModels
+	SystemProjects
+	SystemHorizons
+	SystemReports
+	SystemLTPlan
+	SystemPASA
+	SystemMTSchedule
+	SystemSTSchedule
+	SystemTransmission
+	SystemProduction
+	SystemCompetition
+	SystemStochastic
+	SystemPerformance
+	SystemDiagnostics
+	GeneratorTemplate
+	FuelTemplate
+	FuelContractTemplate
+	EmissionTemplate
+	AbatementTemplate
+	StorageTemplate
+	WaterwayTemplate
+	PowerStationTemplate
+	PhysicalContractTemplate
+	PurchaserTemplate
+	ReserveTemplate
+	BatteryTemplate
+	MaintenanceTemplate
+	HeatPlantTemplate
+	HeatNodeTemplate
+	GasFieldTemplate
+	GasPlantTemplate
+	GasPipelineTemplate
+	GasNodeTemplate
+	GasStorageTemplate
+	GasDemandTemplate
+	GasBasinTemplate
+	GasZoneTemplate
+	GasContractTemplate
+	WaterPlantTemplate
+	WaterPipelineTemplate
+	WaterNodeTemplate
+	WaterStorageTemplate
+	WaterDemandTemplate
+	WaterZoneTemplate
+	RegionTemplate
+	ZoneTemplate
+	NodeTemplate
+	LineTemplate
+	MLFTemplate
+	TransformerTemplate
+	FlowControlTemplate
+	InterfaceTemplate
+	ContingencyTemplate
+	CompanyTemplate
+	FinancialContractTemplate
+	HubTemplate
+	TransmissionRightTemplate
+	CournotTemplate
+	RSITemplate
+	MarketTemplate
+	ConstraintTemplate
+	DecisionVariableTemplate
+	GeneratorHeatInput
+	GeneratorTransition
+	GeneratorFuels
+	GeneratorStartFuels
+	GeneratorHeadStorage
+	GeneratorTailStorage
+	GeneratorPowerStation
+	GeneratorMarktoMarkets
+	GeneratorGasNode
+	GeneratorWaterNode
+	GeneratorNodes
+	GeneratorNodes_star_
+	GeneratorCompanies
+	FuelGasNodes
+	FuelCompanies
+	FuelContractGenerators
+	FuelContractFuel
+	FuelContractCompanies
+	FuelContractConstraints
+	EmissionGenerators
+	EmissionFuels
+	EmissionGasNodes
+	EmissionGasPlants
+	EmissionWaterPlants
+	AbatementGenerators
+	AbatementEmissions
+	AbatementConsumables
+	StorageWaterNodes
+	WaterwayStorageFrom
+	WaterwayStorageTo
+	PowerStationNodes
+	PhysicalContractGenerationNode
+	PhysicalContractLoadNode
+	PhysicalContractCompanies
+	PurchaserNodes
+	PurchaserNodes_star_
+	PurchaserCompanies
+	ReserveGenerators
+	ReservePurchasers
+	ReserveGeneratorContingencies
+	ReserveGeneratorCostAllocation
+	ReserveBatteries
+	ReserveNestedReserves
+	ReserveRegions
+	ReserveLineContingencies
+	BatteryNode
+	BatteryNodes_star_
+	BatteryCompanies
+	MaintenanceGenerators
+	MaintenanceGasPipelines
+	MaintenanceLines
+	MaintenancePrerequisites
+	GeneratorHeatInputNodes
+	GeneratorHeatOutputNodes
+	HeatPlantFuels
+	HeatPlantNodes
+	HeatPlantHeatInputNodes
+	HeatPlantHeatOutputNodes
+	HeatPlantStartFuels
+	HeatNodeHeatExportNodes
+	HeatNodeWaterPlants
+	GasFieldCompanies
+	GasFieldGasNode
+	GasFieldGasBasin
+	GasPlantInputNode
+	GasPlantOutputNode
+	GasPlantNode
+	GasPipelineGasNodeFrom
+	GasPipelineGasNodeTo
+	GasNodeGasZones
+	GasStorageGasNode
+	GasDemandGasNodes
+	GasDemandCompanies
+	GasZoneGenerators
+	GasZoneGasFields
+	GasZoneGasPlants
+	GasZoneExportingGasPipelines
+	GasZoneImportingGasPipelines
+	GasZoneInterzonalGasPipelines
+	GasZoneIntrazonalGasPipelines
+	GasZoneGasStorages
+	GasZoneGasDemands
+	GasZoneExportingGasTransports
+	GasZoneImportingGasTransports
+	GasZoneInterzonalGasTransports
+	GasZoneIntrazonalGasTransports
+	GasContractGasFields
+	GasContractGasPipelines
+	GasContractGasTransports
+	GasTransportExportNode
+	GasTransportImportNode
+	WaterPlantInputNode
+	WaterPlantOutputNode
+	WaterPlantNode
+	WaterPipelineWaterNodeFrom
+	WaterPipelineWaterNodeTo
+	WaterNodeWaterZones
+	WaterNodeNode
+	WaterStorageWaterNode
+	WaterDemandWaterNodes
+	WaterZoneWaterPlants
+	WaterZoneWaterStorages
+	WaterZoneExportingWaterPipelines
+	WaterZoneImportingWaterPipelines
+	WaterZoneInterzonalWaterPipelines
+	WaterZoneIntrazonalWaterPipelines
+	WaterZoneWaterDemands
+	RegionGenerators
+	RegionEmissions
+	RegionGenerationContracts
+	RegionLoadContracts
+	RegionPurchasers
+	RegionMarkets
+	RegionBatteries
+	RegionRegions
+	RegionReferenceNode
+	RegionExportingLines
+	RegionImportingLines
+	RegionInterregionalLines
+	RegionIntraregionalLines
+	RegionExportingTransformers
+	RegionImportingTransformers
+	RegionInterregionalTransformers
+	RegionIntraregionalTransformers
+	RegionUtilities
+	ZoneCapacityGenerators
+	ZoneGenerators
+	ZoneEmissions
+	ZoneCapacityGenerationContracts
+	ZoneCapacityLoadContracts
+	ZoneGenerationContracts
+	ZoneLoadContracts
+	ZoneCapacityPurchasers
+	ZonePurchasers
+	ZoneMarkets
+	ZoneCapacityMarkets
+	ZoneCapacityBatteries
+	ZoneBatteries
+	ZoneRegion
+	ZoneZones
+	ZoneReferenceNode
+	ZoneExportingCapacityLines
+	ZoneExportingLines
+	ZoneImportingCapacityLines
+	ZoneImportingLines
+	ZoneInterzonalLines
+	ZoneIntrazonalLines
+	ZoneExportingCapacityTransformers
+	ZoneExportingTransformers
+	ZoneImportingCapacityTransformers
+	ZoneImportingTransformers
+	ZoneInterzonalTransformers
+	ZoneIntrazonalTransformers
+	NodeRegion
+	NodeCapacityZone
+	NodeZone
+	NodeHubs
+	LineNodeFrom
+	LineNodeTo
+	LineCompanies
+	MLFRegions
+	MLFNode
+	MLFLine
+	TransformerNodeFrom
+	TransformerNodeTo
+	FlowControlLine
+	FlowControlLines_star_
+	InterfaceLines
+	InterfaceTransformers
+	ContingencyGenerators
+	ContingencyLines
+	ContingencyMonitoredLines
+	ContingencyMonitoredTransformers
+	ContingencyTransformers
+	ContingencyMonitoredInterfaces
+	CompanyFuels
+	CompanyEmissions
+	CompanyReserves
+	CompanyRegions
+	FinancialContractGenerators
+	FinancialContractRegion
+	FinancialContractRegions
+	FinancialContractGeneratingCompanies
+	FinancialContractPurchasingCompanies
+	FinancialContractConditions
+	TransmissionRightNodeFrom
+	TransmissionRightNodeTo
+	TransmissionRightZoneFrom
+	TransmissionRightZoneTo
+	TransmissionRightHubFrom
+	TransmissionRightHubTo
+	TransmissionRightLine
+	TransmissionRightCompanies
+	CournotRegion
+	RSIRegion
+	RSILines
+	RSIInterfaces
+	RSICompanies
+	MarketCapacityGenerators
+	MarketHeatGenerators
+	MarketFuels
+	MarketEmissions
+	MarketReserves
+	MarketGasNodes
+	MarketNodes
+	MarketCompanies
+	ConstraintGenerators
+	ConstraintFuels
+	ConstraintFuelContracts
+	ConstraintEmissions
+	ConstraintAbatements
+	ConstraintStorages
+	ConstraintWaterways
+	ConstraintPhysicalContracts
+	ConstraintPurchasers
+	ConstraintReserves
+	ConstraintBatteries
+	ConstraintMaintenances
+	ConstraintHeatPlants
+	ConstraintHeatNodes
+	ConstraintGasFields
+	ConstraintGasPlants
+	ConstraintGasPipelines
+	ConstraintGasNodes
+	ConstraintGasStorages
+	ConstraintGasBasins
+	ConstraintGasContracts
+	ConstraintGasTransports
+	ConstraintWaterPlants
+	ConstraintWaterPipelines
+	ConstraintWaterNodes
+	ConstraintWaterStorages
+	ConstraintRegions
+	ConstraintZones
+	ConstraintNodes
+	ConstraintLines
+	ConstraintTransformers
+	ConstraintFlowControls
+	ConstraintInterfaces
+	ConstraintCompanies
+	ConstraintHubs
+	ConstraintMarkets
+	ConstraintDecisionVariables
+	ConstraintVariables
+	ConstraintConditions
+	DecisionVariableGenerators
+	DecisionVariableNodes
+	DecisionVariableGasPlants
+	DecisionVariableWaterPlants
+	DecisionVariableDefinition
+	VariableGenerators
+	VariableFuels
+	VariableReserves
+	VariableRegions
+	VariableZones
+	VariableNodes
+	VariableLines
+	VariableInterfaces
+	VariableStorages
+	VariableHeatNodes
+	VariableHeatPlants
+	VariableConditions
+	VariableVariables
+	GlobalStorages
+	ModelScenarios
+	ModelHorizon
+	ModelReport
+	ModelLTPlan
+	ModelPASA
+	ModelMTSchedule
+	ModelSTSchedule
+	ModelTransmission
+	ModelProduction
+	ModelCompetition
+	ModelStochastic
+	ModelPerformance
+	ModelDiagnostic
+	ModelInterleaved
+	ProjectModels
+	ProjectHorizon
+	ProjectReport
+	ListGenerators
+	ListFuels
+	ListFuelContracts
+	ListEmissions
+	ListAbatements
+	ListStorages
+	ListWaterways
+	ListPowerStations
+	ListPhysicalContracts
+	ListPurchasers
+	ListReserves
+	ListBatteries
+	ListMaintenances
+	ListHeatPlants
+	ListHeatNodes
+	ListGasFields
+	ListGasPlants
+	ListGasPipelines
+	ListGasNodes
+	ListGasStorages
+	ListGasDemands
+	ListGasBasins
+	ListGasZones
+	ListGasContracts
+	ListGasTransports
+	ListWaterPlants
+	ListWaterPipelines
+	ListWaterNodes
+	ListWaterStorages
+	ListWaterDemands
+	ListWaterZones
+	ListRegions
+	ListZones
+	ListNodes
+	ListLines
+	ListMLFs
+	ListTransformers
+	ListFlowControls
+	ListInterfaces
+	ListContingencies
+	ListCompanies
+	ListFinancialContracts
+	ListHubs
+	ListTransmissionRights
+	ListCournots
+	ListRSIs
+	ListMarkets
+	ListConstraints
+	ListDecisionVariables
+	ListDataFiles
+	ListVariables
+	ListTimeslices
+	ListGlobals
+	ListScenarios
+	ListLists
+	ReportLists
+PeriodEnum 
+	Interval
+	Day
+	Week
+	Month
+	FiscalYear
+	Custom
+	Hour
+	Quarter
+	Block
+	Undefined
+SeriesTypeEnum 
+	Values
+	Properties
+	Names
+	Periods
+	Bands
+	Statistics
+	Samples
+	Models
+	Timeslices
