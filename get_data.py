@@ -15,6 +15,7 @@ pd.set_option('display.width', 1000000000)
 
 # Python .NET interface
 from dotnet import add_assemblies, load_assembly
+from dotnet.overrides import type, isinstance, issubclass
 
 # load PLEXOS assemblies... replace the path below with the installation
 #   installation folder for your PLEXOS installation.
@@ -82,7 +83,7 @@ def get_params(json_dict):
             'TimesliceList', 'SampleList', 'ModelName', \
             'AggregationType', 'Category', 'Separator']
     for j in range(len(json_dict['QueryParams'])):
-        params.append(tuple([convert(json_dict, keys[i], j) for i in range(len(keys))]))
+            params.append(tuple([convert(json_dict, keys[i], j) for i in range(len(keys))]))
     return params
 
 
@@ -101,8 +102,11 @@ for i in xrange(len(json_objects)):
     params_list = get_params(jobj)
     tuning_key = str(jobj['ModelName'])+str(jobj['Y']) # e.g. SMUDFuelCost
     # Traverse a file tree in search of solution files from which to pull data
+    
     for dirName, subDirs, files in os.walk(str(jobj['RootFolder'])):
         for filename in files:
+            df = pd.DataFrame()
+            source = 'temp'
             if bool(pattern.match(filename)): # if True, then "Model ___ Solution.zip" pattern matched
                 # create source: folder name / model name
                 tempsource = filename.replace(string1,'')
@@ -126,6 +130,7 @@ for i in xrange(len(json_objects)):
                     params = params_list[k] # construct tuple to send as parameters
                     # c. Use the __invoke__ method of the alias to call the method.
                     results = query.__invoke__(params)
+                    
                     if k == 0:
                         df = pd.read_csv(csv_file) # create dataframe with query results
                     else:

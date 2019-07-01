@@ -22,7 +22,7 @@ def list_enum_names(enum):
         return ''
 
 print 'SimulationPhaseEnum', list_enum_names(type(SimulationPhaseEnum))
-print 'CollectionEnum', list_enum_names(type(CollectionEnum))
-print 'PeriodEnum', list_enum_names(type(PeriodEnum))
-print 'SeriesTypeEnum', list_enum_names(type(SeriesTypeEnum))
-print 'AggregationEnum', list_enum_names(type(AggregationEnum))
+#print 'CollectionEnum', list_enum_names(type(CollectionEnum))
+#print 'PeriodEnum', list_enum_names(type(PeriodEnum))
+#print 'SeriesTypeEnum', list_enum_names(type(SeriesTypeEnum))
+#print 'AggregationEnum', list_enum_names(type(AggregationEnum))
