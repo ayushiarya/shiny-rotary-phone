@@ -19,7 +19,6 @@ from dotnet.overrides import type, isinstance, issubclass
 
 # load PLEXOS assemblies... replace the path below with the installation
 #   installation folder for your PLEXOS installation.
-#add_assemblies('C:/Program Files (x86)/Energy Exemplar/PLEXOS 7.4/')
 add_assemblies('C:/Program Files (x86)/Energy Exemplar/PLEXOS 8.0/')
 
 try:
@@ -87,7 +86,6 @@ def get_params(json_dict):
     return params
 
 
-csv_file = 'generator_data.csv'
 tuning_df = pd.DataFrame(columns=['tuning_key','source','X'])
 idx = 0
 pattern = re.compile("^Model.*Solution\.zip")
@@ -120,32 +118,38 @@ for i in xrange(len(json_objects)):
                     exit
                 sol.Connection(sol_file)
                 # B. Pull data (query to Pandas via CSV)
+                
                 # a. Alias the Query method with the arguments you plan to use.
                 # Set up the query
-                query = sol.QueryToCSV[String,Boolean,SimulationPhaseEnum,CollectionEnum,String,String, \
-                                       PeriodEnum, SeriesTypeEnum, String, Object, Object, \
-                                       String, String, String, AggregationEnum, String, \
-                                       String]
+                query = sol.QueryToCSV[String, Boolean, SimulationPhaseEnum, \
+                                       CollectionEnum, String, String, \
+                                       PeriodEnum, SeriesTypeEnum, String, \
+                                       Object, Object, String, String, \
+                                       String, AggregationEnum, String, String]
                 for k in range(len(params_list)):
+                    '''
                     params = params_list[k] # construct tuple to send as parameters
-                    # c. Use the __invoke__ method of the alias to call the method.
+                    # c. Use the __invoke__ method of the alias to call the query method.
                     results = query.__invoke__(params)
-                    
+                    '''
+                    params = params_list[k][:8]
+                    results = sol.QueryToCSV(*params_list[k][:8])
+    
                     if k == 0:
-                        df = pd.read_csv(csv_file) # create dataframe with query results
+                        df = pd.read_csv(params[0]) # create dataframe with query results
                     else:
-                        df2 = pd.read_csv(csv_file) # concatenate to existing
+                        df2 = pd.read_csv(params[0]) # concatenate to existing
                         df = pd.concat([df,df2])
-            # do not leave NaN values - will create problem later when extracting data back out
-            df = df.fillna("None")
-            X = str(df)
-            Y = str(jobj['Y']) # will come from metadata
-            tuning_df.loc[idx] = [tuning_key, source, X]
-            idx += 1
+                # do not leave NaN values - will create problem later when extracting data back out
+                df = df.fillna("None")
+                X = str(df)
+                Y = str(jobj['Y']) # will come from metadata
+                tuning_df.loc[idx] = [tuning_key, source, X]
+                idx += 1
 # C. Push tuning data to a db (SQLite) with source information * ONE TIME *
 conn = sql.connect('TuningDB.db')
 tuning_df.to_sql('TuningData', conn, if_exists='replace') # 'TuningData' is the name of the table
-# close the sqlite3 connection
+# close the SQLite3 connection
 conn.close()
 
 print "Data successfully retrieved." 
