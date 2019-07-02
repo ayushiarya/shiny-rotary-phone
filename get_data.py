@@ -25,7 +25,7 @@ try:
     load_assembly('PLEXOS7_NET.Core')
     load_assembly('EEUTILITY')
 except:
-    print "\nException caught \n"
+    print("\nException caught \n")
 
 # Import from .NET assemblies (both PLEXOS and system)
 from PLEXOS7_NET.Core import *
@@ -63,7 +63,7 @@ def convert(jobj, key, query_num=0):
     elif key == "DateFrom" or key == "DateTo":
         return DateTime.Parse(str(jobj['QueryParams'][query_num][key]))
     else:
-        print "ERROR: Invalid key parameter supplied."
+        print("ERROR: Invalid key parameter supplied.")
         exit
 
 def get_params(json_dict):
@@ -94,7 +94,7 @@ string2 = " Solution.zip"
 
 # load metadata from .json file and loop over json objects
 json_objects = json.loads(open('jsontest.json', "r").read())
-for i in xrange(len(json_objects)):
+for i in range(len(json_objects)):
     jobj = json_objects[i]
     # get info from json metadata
     params_list = get_params(jobj)
@@ -114,7 +114,7 @@ for i in xrange(len(json_objects)):
                 sol = Solution()
                 sol_file = dirName + "\\" + filename # replace with your solution file
                 if not os.path.exists(sol_file):
-                    print 'No such file'
+                    print ('No such file')
                     exit
                 sol.Connection(sol_file)
                 # B. Pull data (query to Pandas via CSV)
@@ -127,13 +127,14 @@ for i in xrange(len(json_objects)):
                                        Object, Object, String, String, \
                                        String, AggregationEnum, String, String]
                 for k in range(len(params_list)):
-                    '''
+                    
                     params = params_list[k] # construct tuple to send as parameters
                     # c. Use the __invoke__ method of the alias to call the query method.
                     results = query.__invoke__(params)
                     '''
                     params = params_list[k][:8]
                     results = sol.QueryToCSV(*params_list[k][:8])
+                    '''
     
                     if k == 0:
                         df = pd.read_csv(params[0]) # create dataframe with query results
@@ -152,4 +153,4 @@ tuning_df.to_sql('TuningData', conn, if_exists='replace') # 'TuningData' is the 
 # close the SQLite3 connection
 conn.close()
 
-print "Data successfully retrieved." 
+print("Data successfully retrieved.")
