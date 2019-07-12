@@ -1,5 +1,6 @@
 """
-GET "X" DATA FROM TUNING DB (SQLite3) INTO A PANDAS DATAFRAME
+GET "X" DATA FROM TUNING DB (SQLite3) INTO A PANDAS DATAFRAME.
+SAVES DATAFRAME TO 'x_data.csv'
 
 """
 
@@ -33,7 +34,7 @@ def get_X(df, xcols):
         data_list = re.split(r'\s{2,}', mystr) # split on multiple whitespaces
         # remove index leftover from DataFrame construction in get_data.py
         data_list = data_list[1:]
-        data_list = np.reshape(data_list,(len(data_list)/24,24))
+        data_list = np.reshape(data_list,(int(len(data_list)/24),24))
         # create temporary df to hold data from current row of tuning db
         temp_df = pd.DataFrame(columns = col_list, data = data_list)
         # append to existing df holding all x data thus far
@@ -44,16 +45,26 @@ def get_X(df, xcols):
     if 'value' in xcols:
         new_df['value'] = pd.to_numeric(new_df['value']) # string --> float
         
-    return new_df[xcols]
-
-
-
+    if xcols == ['all']:
+        return new_df
+    else:
+        return new_df[xcols]
+    
+def get_property_names(df, property_names):
+    return df[df['property_name'].isin(property_names)]
 
 # Example of how it works
-
 conn = sql.connect("TuningDB.db") # connect to the Tuning DB
 tuning_df = pd.read_sql_query("SELECT * from TuningData", conn)
 
-x_df = get_X(tuning_df, ['value'])
+#x_df = get_X(tuning_df, \
+#             ['model_name', 'collection_name', 'property_name', 'property_id', \
+#              'child_name', 'value', 'unit_name'])
+x_df = get_X(tuning_df, ['all'])
+    
+#x_df = get_property_names(x_df, ['Cost to Load'])
 
 conn.close() # close the connection to SQL
+
+x_df.to_csv('x_data.csv')
+print("DataFrame successfully created")

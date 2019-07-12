@@ -128,13 +128,13 @@ for i in range(len(json_objects)):
                                        String, AggregationEnum, String, String]
                 for k in range(len(params_list)):
                     
-                    params = params_list[k] # construct tuple to send as parameters
+                    #params = params_list[k] # construct tuple to send as parameters
                     # c. Use the __invoke__ method of the alias to call the query method.
-                    results = query.__invoke__(params)
-                    '''
+                    #results = query.__invoke__(params)
+                    
                     params = params_list[k][:8]
                     results = sol.QueryToCSV(*params_list[k][:8])
-                    '''
+                    
     
                     if k == 0:
                         df = pd.read_csv(params[0]) # create dataframe with query results

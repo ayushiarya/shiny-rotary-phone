@@ -17,12 +17,14 @@ def list_enum_names(enum):
     try:
         if not enum.IsEnum:
             return ''
-        return '\n\t'.join([''] + list(enum.GetEnumNames()))
+        return '\n\t'.join([''] + ['{} = {}'.format(k, int(v)) for (k, v) in zip(enum.GetEnumNames(), enum.GetEnumValues())])
     except:
         return ''
 
-print 'SimulationPhaseEnum', list_enum_names(type(SimulationPhaseEnum))
-#print 'CollectionEnum', list_enum_names(type(CollectionEnum))
-#print 'PeriodEnum', list_enum_names(type(PeriodEnum))
-#print 'SeriesTypeEnum', list_enum_names(type(SeriesTypeEnum))
-#print 'AggregationEnum', list_enum_names(type(AggregationEnum))
+print('SimulationPhaseEnum', list_enum_names(type(SimulationPhaseEnum)))
+print('CollectionEnum', list_enum_names(type(CollectionEnum)))
+print('PeriodEnum', list_enum_names(type(PeriodEnum)))
+print('SeriesTypeEnum', list_enum_names(type(SeriesTypeEnum)))
+print('AggregationEnum', list_enum_names(type(AggregationEnum)))
+print('SystemRegionsEnum', list_enum_names(type(SystemRegionsEnum)))
+

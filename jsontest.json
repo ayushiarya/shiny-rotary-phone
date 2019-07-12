@@ -2,7 +2,7 @@
      "strCSVFile" : "generator_data.csv",
      "bAppendToFile" : "False",
      "SimulationPhaseId" : "STSchedule",
-     "CollectionId" : "SystemGenerators",
+     "CollectionId" : "SystemFuels",
      "ParentName" : "",
      "ChildName" : "",
      "PeriodTypeId" : "FiscalYear",
@@ -21,12 +21,12 @@
      "strCSVFile" : "generator_data.csv",
      "bAppendToFile" : "False",
      "SimulationPhaseId" : "STSchedule",
-     "CollectionId" : "SystemFuels",
+     "CollectionId" : "SystemRegions",
      "ParentName" : "",
      "ChildName" : "",
      "PeriodTypeId" : "FiscalYear",
      "SeriesTypeId" : "Values",
-     "PropertyList" : "1",
+     "PropertyList" : "52",
      "DateFrom" : "4/1/2024",
      "DateTo" : "4/1/2024",
      "TimesliceList" : "0",
@@ -34,21 +34,13 @@
      "ModelName" : "",
      "AggregationType" : "Category",
      "Category" : "",
-     "Separator" : ","}
-     ]
-     ,
-  "Weighting" : 1,
-  "ModelName" : "SMUD",
-  "TuningKey" : "FuelCost",
-  "RootFolder" : "C:\\Users\\plexos\\Documents\\GitHub\\shiny-rotary-phone\\PLEXOS Data Solution Files",
-  "ModelType" : "NN",
-  "Y" : "FuelCost"
- },
-{"QueryParams" : [{
+     "Separator" : ","
+     },
+     {
      "strCSVFile" : "generator_data.csv",
      "bAppendToFile" : "False",
      "SimulationPhaseId" : "STSchedule",
-     "CollectionId" : "SystemGenerators",
+     "CollectionId" : "SystemRegions",
      "ParentName" : "",
      "ChildName" : "",
      "PeriodTypeId" : "FiscalYear",
@@ -62,12 +54,14 @@
      "AggregationType" : "Category",
      "Category" : "",
      "Separator" : ","
-     }],
+     }
+     ]
+     ,
   "Weighting" : 1,
-  "ModelName" : "ABC",
-  "TuningKey" : "FuelCost",
+  "ModelName" : "PLEXOS",
+  "TuningKey" : "TotalCost",
   "RootFolder" : "C:\\Users\\plexos\\Documents\\GitHub\\shiny-rotary-phone\\PLEXOS Data Solution Files",
   "ModelType" : "NN",
-  "Y" : "FuelCost"
+  "Y" : "TotalCost"
  }
 ]
