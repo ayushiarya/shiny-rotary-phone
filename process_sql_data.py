@@ -44,7 +44,7 @@ def get_X(df, xcols):
     
     if 'value' in xcols:
         new_df['value'] = pd.to_numeric(new_df['value']) # string --> float
-        
+
     if xcols == ['all']:
         return new_df
     else:
@@ -60,7 +60,10 @@ tuning_df = pd.read_sql_query("SELECT * from TuningData", conn)
 #x_df = get_X(tuning_df, \
 #             ['model_name', 'collection_name', 'property_name', 'property_id', \
 #              'child_name', 'value', 'unit_name'])
-x_df = get_X(tuning_df, ['all'])
+x_df = get_X(tuning_df, ['model_name','collection_id','collection_name', \
+                         'category_id','child_id','child_name', \
+                         'property_id','property_name','band_id','value', \
+                         'unit_id','unit_name'])
     
 #x_df = get_property_names(x_df, ['Cost to Load'])
 
